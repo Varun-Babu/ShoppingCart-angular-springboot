@@ -2,7 +2,15 @@ package com.example.shoppingApp_backend.DAO;
 
 
 import com.example.shoppingApp_backend.model.Product;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
-public interface ProductDao extends CrudRepository<Product,Integer> {
+import java.util.List;
+
+public interface ProductDao extends CrudRepository<Product, Integer> {
+
+    @Query(value = "SELECT `id`, `category`, `description`, `image`, `name`, `price` FROM `products` WHERE `name` LIKE %:name%",nativeQuery = true)
+    List<Product> SearchProduct(@Param("name") String name);
 }
